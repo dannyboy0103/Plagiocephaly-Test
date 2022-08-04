@@ -763,6 +763,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.5.2"
+  word_break_text:
+    dependency: "direct main"
+    description:
+      name: word_break_text
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
   xdg_directories:
     dependency: transitive
     description:

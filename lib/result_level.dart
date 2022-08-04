@@ -37,53 +37,65 @@ class _ResultLevelBoxState extends State<ResultLevelBox> {
     var min10 = min(screenWidth * (1 / 10), screenHeight * (1 / 10));
 
     return Container(
-      child: Expanded(
-        child: Column(
-          children: [
-            Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(
+            color: Colors.white,
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                FlatButton(
+                TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
                   child: Icon(
                     Icons.close,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ),
               ],
             ),
-            Expanded(
+          ),
+          Expanded(
+            child: Container(
+              color: Colors.white,
               child: Image(
                 height: screenHeight * (5 / 6),
                 image: AssetImage(
-                  'assets/resultLevel.jpeg',
+                  'assets/result_img.png',
                 ),
               ),
             ),
-            NeumorphicButton(
-              style: NeumorphicStyle(
-                color: Colors.blueAccent,
-                depth: 3,
-                // shadowDarkColor: Colors.grey,
-                shape: NeumorphicShape.convex,
-                boxShape: NeumorphicBoxShape.roundRect(
-                  BorderRadius.circular(10),
+          ),
+          Container(
+            color: Colors.white,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: min10, vertical: min30),
+              child: NeumorphicButton(
+                style: NeumorphicStyle(
+                  color: Colors.blueAccent,
+                  depth: 3,
+                  // shadowDarkColor: Colors.grey,
+                  // shape: NeumorphicShape.convex,
+                  boxShape: NeumorphicBoxShape.roundRect(
+                    BorderRadius.circular(10),
+                  ),
                 ),
-              ),
-              onPressed: _launchURL,
-              child: Text(
-                widget.text,
-                style: TextStyle(
-                  fontSize: min20,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+                onPressed: _launchURL,
+                child: Text(
+                  widget.text,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: min20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
     // return Scaffold(
@@ -134,7 +146,7 @@ class _ResultLevelBoxState extends State<ResultLevelBox> {
 }
 
 _launchURL() async {
-  const url = 'https://naver.com';
+  const url = 'https://cafe.naver.com/drchangvely/14';
   if (await canLaunch(url)) {
     await launch(url);
   } else {

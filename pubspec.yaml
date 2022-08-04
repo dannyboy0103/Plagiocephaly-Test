@@ -64,10 +64,11 @@ dependencies:
   expandable: ^5.0.1
   favorite_button: ^0.0.4
   rxdart: ^0.27.3
+  word_break_text: ^0.1.0
 
 
 
-  
+
 
 
 

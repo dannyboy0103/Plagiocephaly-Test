@@ -16,6 +16,7 @@ import 'package:mybabyskull/services/CRUD.dart';
 import 'package:mybabyskull/warning.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:toast/toast.dart';
+import 'package:word_break_text/word_break_text.dart';
 import 'dart:math';
 import '../constants.dart';
 import '../dialog_widget.dart';
@@ -123,102 +124,161 @@ class _AnnotationViewState extends State<AnnotationView> {
           var min10 = min(screenWidth * (1 / 10), screenHeight * (1 / 10));
           return Scaffold(
             extendBodyBehindAppBar: true,
-            appBar: PreferredSize(
-              preferredSize: Size.fromHeight(50.0),
-              child: AppBar(
-                elevation: 0,
-                backgroundColor: Colors.black,
-                /*title: (cvaidone==false && crdone==false) ? Text(
+            appBar: AppBar(
+              elevation: 0,
+              backgroundColor: Colors.black,
+              /*title: (cvaidone==false && crdone==false) ? Text(
           '1단계',
           style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
           ),
         ): (crdone==true)?Text(
           '2단계',
           style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
           ),
         ):Text(''),*/
-                // leading: FlatButton(
-                //   child: Icon(
-                //     Icons.home_outlined,
-                //     color: Colors.white,
-                //   ),
-                //   onPressed: () {
-                //     //Navigator.pop(context);
-                //     Navigator.pushReplacementNamed(context, 'initialView');
-                //   },
-                // ),
-                actions: [
-                  FlatButton(
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return CustomDialogBox(
-                                title: "진단하는 방법",
-                                descriptions:
-                                    "Hii all this is a custom dialog in flutter and  you will be use in your flutter applications",
-                                text: "확인",
-                              );
-                            });
-                      },
-                      // child: Padding(
-                      //   padding: const EdgeInsets.all(2.0),
-                      //   child: Column(
-                      //     children: [
-                      //       Icon(Icons.info, color: Colors.white),
-                      //       AutoSizeText('진단 방법',
-                      //           style:
-                      //               TextStyle(color: Colors.white, fontSize: 10)),
-                      //     ],
-                      //   ),
-                      // ),
-                      child: Icon(
-                        Icons.info,
-                        color: Colors.white,
-                      )),
-                  (pickedImage != null)
-                      ? FlatButton(
-                          child: Container(
-                              padding: EdgeInsets.fromLTRB(4, 4, 5, 4),
-                              child: Icon(Icons.add_a_photo_outlined,
-                                  color: Colors.white)),
-                          onPressed: () async {
-                            Uint8List bytefrompicker =
-                                await ImagePickerWeb.getImage(
-                                    outputType: ImageType.bytes);
-                            setState(() {
-                              pickedImage = bytefrompicker;
-                              imagesizer.getImagesize(pickedImage);
-                            });
-                          },
-                        )
-                      : Container()
-                ],
-              ),
+              // leading: FlatButton(
+              //   child: Icon(
+              //     Icons.home_outlined,
+              //     color: Colors.white,
+              //   ),
+              //   onPressed: () {
+              //     //Navigator.pop(context);
+              //     Navigator.pushReplacementNamed(context, 'initialView');
+              //   },
+              // ),
+              actions: [
+                FlatButton(
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CustomDialogBox(
+                              title: "진단하는 방법",
+                              descriptions:
+                                  "Hii all this is a custom dialog in flutter and  you will be use in your flutter applications",
+                              text: "확인",
+                            );
+                          });
+                    },
+                    // child: Padding(
+                    //   padding: const EdgeInsets.all(2.0),
+                    //   child: Column(
+                    //     children: [
+                    //       Icon(Icons.info, color: Colors.white),
+                    //       AutoSizeText('진단 방법',
+                    //           style:
+                    //               TextStyle(color: Colors.white, fontSize: 10)),
+                    //     ],
+                    //   ),
+                    // ),
+                    child: Icon(
+                      Icons.info,
+                      color: Colors.white,
+                    )),
+                (pickedImage != null)
+                    ? FlatButton(
+                        child: Container(
+                            padding: EdgeInsets.fromLTRB(4, 4, 5, 4),
+                            child: Icon(Icons.add_a_photo_outlined,
+                                color: Colors.white)),
+                        onPressed: () async {
+                          Uint8List bytefrompicker =
+                              await ImagePickerWeb.getImage(
+                                  outputType: ImageType.bytes);
+                          setState(() {
+                            pickedImage = bytefrompicker;
+                            imagesizer.getImagesize(pickedImage);
+                          });
+                        },
+                      )
+                    : Container()
+              ],
             ),
             body: (isloading)
                 ? Center(child: CircularProgressIndicator())
                 : Container(
                     height: MediaQuery.of(context).size.height,
-                    child: Expanded(
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 56,
-                            width: MediaQuery.of(context).size.width,
-                          ),
-                          (pickedImage != null)
-                              ? Card(
-                                  child: Stack(
-                                    children: [
-                                      Transform(
-                                          alignment: FractionalOffset.center,
-                                          transform: Matrix4.diagonal3(
-                                              Vector3(_scale, _scale, _scale)),
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 56,
+                          width: MediaQuery.of(context).size.width,
+                        ),
+                        (pickedImage != null)
+                            ? Card(
+                                child: Stack(
+                                  children: [
+                                    Transform(
+                                        alignment: FractionalOffset.center,
+                                        transform: Matrix4.diagonal3(
+                                            Vector3(_scale, _scale, _scale)),
+                                        child: Container(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              2 /
+                                              3,
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          child: Transform.rotate(
+                                            angle: angle,
+                                            child: Image.memory(
+                                              pickedImage,
+                                              fit: (imagesizer.imgheight * 2 >
+                                                      imagesizer.imgwidth *
+                                                          3) // 가로 세로 비율을 2/3 기준으로 피팅할 기준 잡음
+                                                  ? BoxFit.fitHeight
+                                                  : BoxFit.fitWidth,
+                                              alignment: Alignment.center,
+                                            ),
+                                          ),
+                                        )),
+                                    GestureDetector(
+                                      // onTapDown: (details) {
+                                      onTapUp: (details) {
+                                        print(details.localPosition);
+                                        setState(() {
+                                          if (crdone == false) {
+                                            if (croffsets.length < 4) {
+                                              croffsets
+                                                  .add(details.localPosition);
+                                            } else {
+                                              Toast.show(
+                                                "cr 점 네개를 이미 찍었습니다.\n다음 버튼을 눌러주세요.",
+                                                context,
+                                                duration: 2,
+                                                gravity: Toast.BOTTOM,
+                                              );
+                                            }
+                                          } else {
+                                            if (cvaioffsets.length < 4) {
+                                              cvaioffsets
+                                                  .add(details.localPosition);
+                                            } else {
+                                              Toast.show(
+                                                "cvai 점 네개를 이미 찍었습니다.\n결과를 확인해보세요.",
+                                                context,
+                                                duration: 2,
+                                                gravity: Toast.BOTTOM,
+                                              );
+                                            }
+                                          }
+                                        });
+                                      },
+                                      child: Center(
+                                        child: CustomPaint(
+                                          painter: ImagePainter(
+                                            image,
+                                            croffsets,
+                                            cvaioffsets,
+                                            crdone,
+                                            MediaQuery.of(context).size.width *
+                                                sqrt(3),
+                                          ),
                                           child: Container(
                                             height: MediaQuery.of(context)
                                                     .size
@@ -228,313 +288,41 @@ class _AnnotationViewState extends State<AnnotationView> {
                                             width: MediaQuery.of(context)
                                                 .size
                                                 .width,
-                                            child: Transform.rotate(
-                                              angle: angle,
-                                              child: Image.memory(
-                                                pickedImage,
-                                                fit: (imagesizer.imgheight * 2 >
-                                                        imagesizer.imgwidth *
-                                                            3) // 가로 세로 비율을 2/3 기준으로 피팅할 기준 잡음
-                                                    ? BoxFit.fitHeight
-                                                    : BoxFit.fitWidth,
-                                                alignment: Alignment.center,
-                                              ),
-                                            ),
-                                          )),
-                                      GestureDetector(
-                                        // onTapDown: (details) {
-                                        onTapUp: (details) {
-                                          print(details.localPosition);
-                                          setState(() {
-                                            if (crdone == false) {
-                                              if (croffsets.length < 4) {
-                                                croffsets
-                                                    .add(details.localPosition);
-                                              } else {
-                                                Toast.show(
-                                                  "cr 점 네개를 이미 찍었습니다.\n다음 버튼을 눌러주세요.",
-                                                  context,
-                                                  duration: 2,
-                                                  gravity: Toast.BOTTOM,
-                                                );
-                                              }
-                                            } else {
-                                              if (cvaioffsets.length < 4) {
-                                                cvaioffsets
-                                                    .add(details.localPosition);
-                                              } else {
-                                                Toast.show(
-                                                  "cvai 점 네개를 이미 찍었습니다.\n결과를 확인해보세요.",
-                                                  context,
-                                                  duration: 2,
-                                                  gravity: Toast.BOTTOM,
-                                                );
-                                              }
-                                            }
-                                          });
-                                        },
-                                        child: Center(
-                                          child: CustomPaint(
-                                            painter: ImagePainter(
-                                              image,
-                                              croffsets,
-                                              cvaioffsets,
-                                              crdone,
-                                              MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  sqrt(3),
-                                            ),
-                                            child: Container(
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  2 /
-                                                  3,
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                            ),
                                           ),
                                         ),
                                       ),
-                                      Positioned(
-                                        //X선이 카드를 넘는거 방지용 위젯
-                                        top: MediaQuery.of(context).size.width *
-                                                1.2 +
-                                            70,
-                                        child: Container(),
-                                      )
-                                    ],
-                                  ),
-                                )
-                              : Expanded(
-                                  child: Container(
-                                    height: MediaQuery.of(context).size.width,
-                                    width: MediaQuery.of(context).size.width,
-                                    alignment: Alignment.center,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        // AutoSizeText('검사를 위해 아이 머리 사진을 추가해주세요.',
-                                        //     textAlign: TextAlign.center,
-                                        //     style: TextStyle(
-                                        //         fontSize: min(
-                                        //             screenWidth * (1 / 30),
-                                        //             screenHeight * (1 / 30)),
-                                        //         // color: Colors.blueGrey,
-                                        //         color: Colors.black,
-                                        //         fontWeight: FontWeight.bold)),
-                                        NeumorphicButton(
-                                          margin: const EdgeInsets.all(20.0),
-                                          padding: const EdgeInsets.all(50),
-                                          style: NeumorphicStyle(
-                                            color: Colors.white,
-                                            depth: 3,
-                                            shape: NeumorphicShape.convex,
-                                            boxShape:
-                                                NeumorphicBoxShape.roundRect(
-                                                    BorderRadius.circular(8)),
-                                          ),
-                                          onPressed: () async {
-                                            Uint8List bytefrompicker =
-                                                await ImagePickerWeb.getImage(
-                                                    outputType:
-                                                        ImageType.bytes);
-                                            setState(() {
-                                              pickedImage = bytefrompicker;
-                                              print(pickedImage.length);
-                                              // pickedImage = pickedImage.sublist(
-                                              //     0,
-                                              //     ((pickedImage.length) / 2)
-                                              //         .round());
-                                              // print(pickedImage.length);
-                                              imagesizer
-                                                  .getImagesize(pickedImage);
-                                            });
-                                            print("width" +
-                                                imagesizer.imgwidth.toString());
-                                            print("height" +
-                                                imagesizer.imgheight
-                                                    .toString());
-                                          },
-                                          child: Icon(
-                                              Icons.add_a_photo_outlined,
-                                              color: Colors.blueAccent,
-                                              size: min(screenWidth * (1 / 10),
-                                                  screenHeight * (1 / 10))),
-                                        ),
-                                        Neumorphic(
-                                          style: NeumorphicStyle(
-                                            color: Colors.blueAccent
-                                                .withOpacity(0.5),
-                                            depth: 3,
-                                            shape: NeumorphicShape.convex,
-                                            boxShape:
-                                                NeumorphicBoxShape.roundRect(
-                                                    BorderRadius.circular(8)),
-                                          ),
-                                          child: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: min20,
-                                                horizontal: min20),
-                                            // child: Text(
-                                            child: Text(
-                                              '위의 버튼을 눌러 아이 머리 사진을 \n추가해주세요.',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  fontSize: min20,
-                                                  // color: Colors.blueGrey,
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                        )
-                                      ],
                                     ),
-                                  ),
+                                    Positioned(
+                                      //X선이 카드를 넘는거 방지용 위젯
+                                      top: MediaQuery.of(context).size.width *
+                                              1.2 +
+                                          70,
+                                      child: Container(),
+                                    )
+                                  ],
                                 ),
-                          (pickedImage != null)
-                              // ? Container(
-                              //     color: Colors.blueAccent.withOpacity(0.5),
-                              //     child: Padding(
-                              //       padding: EdgeInsets.symmetric(
-                              //         vertical: min20,
-                              //         horizontal: min20,
-                              //         // horizontal: 13,
-                              //       ),
-                              //       child: Text(
-                              //           (crdone == false)
-                              //               ? '화면 상 아이의 양쪽 귀, 앞통수, 뒤통수에 점 \n(총 4개의 점)을 찍습니다'
-                              //               : 'X자와 머리의 끝부분이 교차하는 지점들에 각각 점 \n(총 4개의 점)을 찍습니다.',
-                              //           textAlign: TextAlign.center,
-                              //           style: TextStyle(
-                              //               fontSize: min30,
-                              //               // color: Colors.blueGrey,
-                              //               color: Colors.black,
-                              //               fontWeight: FontWeight.bold)),
-                              //     ),
-                              //   )
-                              ? Neumorphic(
-                                  style: NeumorphicStyle(
-                                    color: Colors.blueAccent.withOpacity(0.5),
-                                    depth: 3,
-                                    shape: NeumorphicShape.convex,
-                                    boxShape: NeumorphicBoxShape.roundRect(
-                                        BorderRadius.circular(8)),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: min20,
-                                      horizontal: min20,
-                                      // horizontal: 13,
-                                    ),
-                                    child: Text(
-                                        (crdone == false)
-                                            // ? '화면 상 아이의 양쪽 귀의 뒷부분, 앞통수, 코와 직선거리의 뒤통수에 점 \n(총 4개의 점)을 찍습니다'
-                                            ? '화면 상 아이의 양쪽 귀, 앞통수, 뒤통수에 점\n(총 4개의 점)을 찍습니다'
-                                            : 'X자와 머리의 끝부분이 교차하는 지점들에 각각 점 \n(총 4개의 점)을 찍습니다.',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontSize: min30,
-                                            // color: Colors.blueGrey,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold)),
-                                  ),
-                                )
-                              : Container(),
-                          Padding(
-                            // padding: const EdgeInsets.all(8.0),
-                            padding: EdgeInsets.fromLTRB(
-                                min30 * (1 / 2),
-                                min30 * (1 / 2),
-                                min30 * (1 / 2),
-                                min30 * (1 / 2)),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Padding(
-                                  // 점 취소 버튼
-                                  padding: const EdgeInsets.all(2),
-                                  child: NeumorphicButton(
-                                    style: NeumorphicStyle(
-                                      color: Colors.white,
-                                      depth: 3,
-                                      shape: NeumorphicShape.convex,
-                                      boxShape: NeumorphicBoxShape.roundRect(
-                                          BorderRadius.circular(8)),
-                                    ),
-                                    padding: EdgeInsets.all(
-                                      min(screenWidth * (1 / 30),
-                                          screenHeight * (1 / 30)),
-                                    ),
-                                    //color: Colors.blueAccent,
-                                    child: Row(
-                                      children: [
-                                        Icon(
-                                          Icons.navigate_before,
-                                          color: Colors.blueAccent,
-                                          size: min(screenWidth * (1 / 30),
-                                              screenHeight * (1 / 30)),
-                                        ),
-                                        SizedBox(width: 2),
-                                        AutoSizeText(
-                                          '점 취소',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: min(
-                                                  screenWidth * (1 / 30),
-                                                  screenHeight * (1 / 30)),
-                                              color: Colors.black),
-                                        ),
-                                      ],
-                                    ),
-                                    onPressed: () {
-                                      if (pickedImage == null) {
-                                        Toast.show(
-                                          "이미지를 불러오세요.",
-                                          context,
-                                          duration: 1,
-                                          gravity: Toast.BOTTOM,
-                                        );
-                                      } else {
-                                        setState(() {
-                                          if (crdone == false) {
-                                            if (croffsets.length == 0) {
-                                              Toast.show(
-                                                "점을 찍어주세요",
-                                                context,
-                                                duration: 1,
-                                                gravity: Toast.BOTTOM,
-                                              );
-                                            } else {
-                                              croffsets.removeLast();
-                                            }
-                                          } else {
-                                            if (cvaioffsets.length == 0) {
-                                              Toast.show(
-                                                "점을 찍어주세요",
-                                                context,
-                                                duration: 1,
-                                                gravity: Toast.BOTTOM,
-                                              );
-                                            } else {
-                                              cvaioffsets.removeLast();
-                                            }
-                                          }
-                                        });
-                                      }
-                                    },
-                                  ),
-                                ),
-                                Padding(
-                                    padding: const EdgeInsets.all(5),
-                                    child: NeumorphicButton(
+                              )
+                            : Container(
+                                height: MediaQuery.of(context).size.width,
+                                width: MediaQuery.of(context).size.width,
+                                alignment: Alignment.center,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  //mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    // AutoSizeText('검사를 위해 아이 머리 사진을 추가해주세요.',
+                                    //     textAlign: TextAlign.center,
+                                    //     style: TextStyle(
+                                    //         fontSize: min(
+                                    //             screenWidth * (1 / 30),
+                                    //             screenHeight * (1 / 30)),
+                                    //         // color: Colors.blueGrey,
+                                    //         color: Colors.black,
+                                    //         fontWeight: FontWeight.bold)),
+                                    NeumorphicButton(
+                                      margin: const EdgeInsets.all(20.0),
+                                      padding: const EdgeInsets.all(50),
                                       style: NeumorphicStyle(
                                         color: Colors.white,
                                         depth: 3,
@@ -542,46 +330,181 @@ class _AnnotationViewState extends State<AnnotationView> {
                                         boxShape: NeumorphicBoxShape.roundRect(
                                             BorderRadius.circular(8)),
                                       ),
-                                      padding: EdgeInsets.all(
-                                        min(screenWidth * (1 / 30),
-                                            screenHeight * (1 / 30)),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          Icon(
-                                            Icons.screen_rotation,
-                                            color: Colors.blueAccent,
-                                            size: min(screenWidth * (1 / 30),
-                                                screenHeight * (1 / 30)),
-                                          ),
-                                          SizedBox(width: 2),
-                                          AutoSizeText(
-                                            ' 돌리기',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: min(
-                                                    screenWidth * (1 / 30),
-                                                    screenHeight * (1 / 30)),
-                                                color: Colors.black),
-                                          ),
-                                        ],
-                                      ),
-                                      onPressed: () {
+                                      onPressed: () async {
+                                        Uint8List bytefrompicker =
+                                            await ImagePickerWeb.getImage(
+                                                outputType: ImageType.bytes);
                                         setState(() {
-                                          rotation_count++;
-                                          if (rotation_count % 4 == 0) {
-                                            angle = 0;
-                                          } else if (rotation_count % 4 == 1) {
-                                            angle = pi / 2;
-                                          } else if (rotation_count % 4 == 2) {
-                                            angle = pi;
-                                          } else if (rotation_count % 4 == 3) {
-                                            angle = 3 * pi / 2;
-                                          }
+                                          pickedImage = bytefrompicker;
+                                          print(pickedImage.length);
+                                          imagesizer.getImagesize(pickedImage);
                                         });
+                                        print("width" +
+                                            imagesizer.imgwidth.toString());
+                                        print("height" +
+                                            imagesizer.imgheight.toString());
                                       },
-                                    )),
-                                Padding(
+                                      child: Icon(Icons.add_a_photo_outlined,
+                                          color: Colors.blueAccent,
+                                          size: min(screenWidth * (1 / 10),
+                                              screenHeight * (1 / 10))),
+                                    ),
+                                    Neumorphic(
+                                      style: NeumorphicStyle(
+                                        color:
+                                            Colors.blueAccent.withOpacity(0.5),
+                                        depth: 3,
+                                        shape: NeumorphicShape.convex,
+                                        boxShape: NeumorphicBoxShape.roundRect(
+                                            BorderRadius.circular(8)),
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: min20, horizontal: min20),
+                                        // child: Text(
+                                        child: Text(
+                                          '위의 버튼을 눌러\n아이 머리 사진을 추가해주세요.',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              fontSize: min20,
+                                              // color: Colors.blueGrey,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                        (pickedImage != null)
+                            // ? Container(
+                            //     color: Colors.blueAccent.withOpacity(0.5),
+                            //     child: Padding(
+                            //       padding: EdgeInsets.symmetric(
+                            //         vertical: min20,
+                            //         horizontal: min20,
+                            //         // horizontal: 13,
+                            //       ),
+                            //       child: Text(
+                            //           (crdone == false)
+                            //               ? '화면 상 아이의 양쪽 귀, 앞통수, 뒤통수에 점 \n(총 4개의 점)을 찍습니다'
+                            //               : 'X자와 머리의 끝부분이 교차하는 지점들에 각각 점 \n(총 4개의 점)을 찍습니다.',
+                            //           textAlign: TextAlign.center,
+                            //           style: TextStyle(
+                            //               fontSize: min30,
+                            //               // color: Colors.blueGrey,
+                            //               color: Colors.black,
+                            //               fontWeight: FontWeight.bold)),
+                            //     ),
+                            //   )
+                            ? Neumorphic(
+                                style: NeumorphicStyle(
+                                  color: Colors.blueAccent.withOpacity(0.5),
+                                  depth: 3,
+                                  shape: NeumorphicShape.convex,
+                                  boxShape: NeumorphicBoxShape.roundRect(
+                                      BorderRadius.circular(8)),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: min20,
+                                    horizontal: min20,
+                                    // horizontal: 13,
+                                  ),
+                                  child: Text(
+                                      (crdone == false)
+                                          // ? '화면 상 아이의 양쪽 귀의 뒷부분, 앞통수, 코와 직선거리의 뒤통수에 점 \n(총 4개의 점)을 찍습니다'
+                                          ? '화면 상 아이의 양쪽 귀, 앞통수, 뒤통수에 점\n(총 4개의 점)을 찍습니다'
+                                          : 'X자와 머리의 끝부분이 교차하는 지점들에 각각 점 \n(총 4개의 점)을 찍습니다.',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: min30,
+                                          // color: Colors.blueGrey,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                              )
+                            : Container(),
+                        Expanded(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Padding(
+                                // 점 취소 버튼
+                                padding: const EdgeInsets.all(2),
+                                child: NeumorphicButton(
+                                  style: NeumorphicStyle(
+                                    color: Colors.white,
+                                    depth: 3,
+                                    shape: NeumorphicShape.convex,
+                                    boxShape: NeumorphicBoxShape.roundRect(
+                                        BorderRadius.circular(8)),
+                                  ),
+                                  padding: EdgeInsets.all(5
+                                      /*min(screenWidth * (1 / 30),
+                                        screenHeight * (1 / 30)),*/
+                                      ),
+                                  //color: Colors.blueAccent,
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.navigate_before,
+                                        color: Colors.blueAccent,
+                                        /*size: min(screenWidth * (1 / 30),
+                                            screenHeight * (1 / 30)),*/
+                                      ),
+                                      SizedBox(width: 2),
+                                      AutoSizeText(
+                                        '점 취소',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            /*fontSize: min(
+                                                screenWidth * (1 / 30),
+                                                screenHeight * (1 / 30)),*/
+                                            color: Colors.black),
+                                      ),
+                                    ],
+                                  ),
+                                  onPressed: () {
+                                    if (pickedImage == null) {
+                                      Toast.show(
+                                        "이미지를 불러오세요.",
+                                        context,
+                                        duration: 1,
+                                        gravity: Toast.BOTTOM,
+                                      );
+                                    } else {
+                                      setState(() {
+                                        if (crdone == false) {
+                                          if (croffsets.length == 0) {
+                                            Toast.show(
+                                              "점을 찍어주세요",
+                                              context,
+                                              duration: 1,
+                                              gravity: Toast.BOTTOM,
+                                            );
+                                          } else {
+                                            croffsets.removeLast();
+                                          }
+                                        } else {
+                                          if (cvaioffsets.length == 0) {
+                                            Toast.show(
+                                              "점을 찍어주세요",
+                                              context,
+                                              duration: 1,
+                                              gravity: Toast.BOTTOM,
+                                            );
+                                          } else {
+                                            cvaioffsets.removeLast();
+                                          }
+                                        }
+                                      });
+                                    }
+                                  },
+                                ),
+                              ),
+                              Padding(
                                   padding: const EdgeInsets.all(5),
                                   child: NeumorphicButton(
                                     style: NeumorphicStyle(
@@ -591,101 +514,119 @@ class _AnnotationViewState extends State<AnnotationView> {
                                       boxShape: NeumorphicBoxShape.roundRect(
                                           BorderRadius.circular(8)),
                                     ),
-                                    padding: EdgeInsets.all(
-                                      min(screenWidth * (1 / 30),
-                                          screenHeight * (1 / 30)),
-                                    ),
+                                    padding: EdgeInsets.all(5
+                                        /*min(screenWidth * (1 / 30),
+                                          screenHeight * (1 / 30)),*/
+                                        ),
                                     child: Row(
                                       children: [
                                         Icon(
-                                          Icons.navigate_next,
+                                          Icons.screen_rotation,
                                           color: Colors.blueAccent,
-                                          size: min(screenWidth * (1 / 30),
-                                              screenHeight * (1 / 30)),
+                                          /*size: min(screenWidth * (1 / 30),
+                                              screenHeight * (1 / 30)),*/
                                         ),
                                         SizedBox(width: 2),
-                                        (crdone == false)
-                                            ? AutoSizeText(
-                                                '다음',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: min(
-                                                        screenWidth * (1 / 30),
-                                                        screenHeight *
-                                                            (1 / 30)),
-                                                    color: Colors.black),
-                                              )
-                                            : AutoSizeText('결과보기',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: min(
-                                                        screenWidth * (1 / 30),
-                                                        screenHeight *
-                                                            (1 / 30)),
-                                                    color: Colors.black)),
+                                        AutoSizeText(
+                                          ' 돌리기',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              // fontSize: min(
+                                              //     screenWidth * (1 / 30),
+                                              //     screenHeight * (1 / 30)),
+                                              color: Colors.black),
+                                        ),
                                       ],
                                     ),
                                     onPressed: () {
-                                      print('crdone');
-                                      print(crdone);
-                                      print('cvaidone');
-                                      print(cvaidone);
+                                      setState(() {
+                                        rotation_count++;
+                                        if (rotation_count % 4 == 0) {
+                                          angle = 0;
+                                        } else if (rotation_count % 4 == 1) {
+                                          angle = pi / 2;
+                                        } else if (rotation_count % 4 == 2) {
+                                          angle = pi;
+                                        } else if (rotation_count % 4 == 3) {
+                                          angle = 3 * pi / 2;
+                                        }
+                                      });
+                                    },
+                                  )),
+                              Padding(
+                                padding: const EdgeInsets.all(5),
+                                child: NeumorphicButton(
+                                  style: NeumorphicStyle(
+                                    color: Colors.white,
+                                    depth: 3,
+                                    shape: NeumorphicShape.convex,
+                                    boxShape: NeumorphicBoxShape.roundRect(
+                                        BorderRadius.circular(8)),
+                                  ),
+                                  padding: EdgeInsets.all(5
+                                      // min(screenWidth * (1 / 30),
+                                      //     screenHeight * (1 / 30)),
+                                      ),
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.navigate_next,
+                                        color: Colors.blueAccent,
+                                        // size: min(screenWidth * (1 / 30),
+                                        //     screenHeight * (1 / 30)),
+                                      ),
+                                      SizedBox(width: 2),
+                                      (crdone == false)
+                                          ? AutoSizeText(
+                                              '다음',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  /*fontSize: min(
+                                                      screenWidth * (1 / 30),
+                                                      screenHeight *
+                                                          (1 / 30)),*/
+                                                  color: Colors.black),
+                                            )
+                                          : AutoSizeText('결과보기',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  /*fontSize: min(
+                                                      screenWidth * (1 / 30),
+                                                      screenHeight *
+                                                          (1 / 30)),*/
+                                                  color: Colors.black)),
+                                    ],
+                                  ),
+                                  onPressed: () {
+                                    print('crdone');
+                                    print(crdone);
+                                    print('cvaidone');
+                                    print(cvaidone);
 
-                                      if (pickedImage == null) {
-                                        Toast.show(
-                                          "이미지를 불러오세요.",
-                                          context,
-                                          duration: 1,
-                                          gravity: Toast.BOTTOM,
-                                        );
-                                      } else {
-                                        setState(() {
-                                          if (crdone == true &&
-                                              cvaidone == false) {
-                                            if (cvaioffsets.length < 4) {
-                                              Toast.show(
-                                                "점이 네개 보다 적습니다.",
-                                                context,
-                                                duration: 2,
-                                                gravity: Toast.BOTTOM,
-                                              );
-                                            } else {
-                                              print('wow');
-                                              // setState(() {
-                                              //   isloading = true;
-                                              // });
-                                              cvaidone = true;
-                                              Navigator.pushReplacement(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          TestResultView(
-                                                            crvalue: TestValues
-                                                                .crvalue,
-                                                            cvaivalue:
-                                                                TestValues
-                                                                    .cvaivalue,
-                                                            myimage:
-                                                                pickedImage,
-                                                          )));
-                                            }
-                                          } else if (crdone == false &&
-                                              cvaidone == false) {
-                                            if (croffsets.length < 4) {
-                                              Toast.show(
-                                                "점이 네개 보다 적습니다.",
-                                                context,
-                                                duration: 2,
-                                                gravity: Toast.BOTTOM,
-                                              );
-                                            } else {
-                                              crdone = true;
-                                            }
-                                          } else if (crdone == true &&
-                                              cvaidone == true) {
-                                            setState(() {
-                                              isloading = true;
-                                            });
+                                    if (pickedImage == null) {
+                                      Toast.show(
+                                        "이미지를 불러오세요.",
+                                        context,
+                                        duration: 1,
+                                        gravity: Toast.BOTTOM,
+                                      );
+                                    } else {
+                                      setState(() {
+                                        if (crdone == true &&
+                                            cvaidone == false) {
+                                          if (cvaioffsets.length < 4) {
+                                            Toast.show(
+                                              "점이 네개 보다 적습니다.",
+                                              context,
+                                              duration: 2,
+                                              gravity: Toast.BOTTOM,
+                                            );
+                                          } else {
+                                            print('wow');
+                                            // setState(() {
+                                            //   isloading = true;
+                                            // });
+                                            cvaidone = true;
                                             Navigator.pushReplacement(
                                                 context,
                                                 MaterialPageRoute(
@@ -695,20 +636,48 @@ class _AnnotationViewState extends State<AnnotationView> {
                                                               .crvalue,
                                                           cvaivalue: TestValues
                                                               .cvaivalue,
+                                                          myimage: pickedImage,
                                                         )));
-                                          } else {
-                                            print('?');
                                           }
-                                        });
-                                      }
-                                    },
-                                  ),
+                                        } else if (crdone == false &&
+                                            cvaidone == false) {
+                                          if (croffsets.length < 4) {
+                                            Toast.show(
+                                              "점이 네개 보다 적습니다.",
+                                              context,
+                                              duration: 2,
+                                              gravity: Toast.BOTTOM,
+                                            );
+                                          } else {
+                                            crdone = true;
+                                          }
+                                        } else if (crdone == true &&
+                                            cvaidone == true) {
+                                          setState(() {
+                                            isloading = true;
+                                          });
+                                          Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      TestResultView(
+                                                        crvalue:
+                                                            TestValues.crvalue,
+                                                        cvaivalue: TestValues
+                                                            .cvaivalue,
+                                                      )));
+                                        } else {
+                                          print('?');
+                                        }
+                                      });
+                                    }
+                                  },
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
           );
