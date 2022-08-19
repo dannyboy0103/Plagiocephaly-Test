@@ -67,30 +67,33 @@ class _CustomWarningBoxState extends State<CustomWarningBox> {
                   alignment: Alignment.centerLeft,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    // crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
                         height: screenHeight * (1 / 20),
                       ),
                       WordBreakText(
-                        '이 검사 방법은 실제 사두증과 단두증의 비율을 재는 공식을 바탕으로 한 진단 방법으로 검사 방법의 정당성이 검증되어 있습니다.',
+                        '이 검사 방법은 실제 사두증과 단두증의 비율을 재는 공식을 바탕으로 한 진단 방법으로 검사 방법의 정당성이 검증되어 있습니다.\n',
                         style: TextStyle(
                             fontSize: min(screenWidth * (1 / 30),
                                 screenHeight * (1 / 30)),
                             color: Colors.black),
                       ),
                       WordBreakText(
-                        '신중하고 정확하게 점을 찍으셔야 더 정확한 결과가 나옵니다',
+                        '튜토리얼 참조하여 정확하게 점을 찍으시면 정밀한 결과를 확인하실 수 있습니다',
                         style: TextStyle(
-                            fontSize: min(screenWidth * (1 / 30),
-                                screenHeight * (1 / 30)),
-                            color: Colors.black),
+                          fontSize: min(
+                              screenWidth * (1 / 30), screenHeight * (1 / 30)),
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       SizedBox(
                         height: screenHeight * (1 / 20),
                       ),
                       Text(
-                        '유의 사항',
+                        '유의 사항\n',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: min(screenWidth * (1 / 30),
                                 screenHeight * (1 / 30)),
@@ -98,14 +101,14 @@ class _CustomWarningBoxState extends State<CustomWarningBox> {
                             fontWeight: FontWeight.bold),
                       ),
                       WordBreakText(
-                        '이 검사는 간단하게 아이의 두상을 확인해 보는 실험으로써 점 위치 선정의 정확성에 따라 검사 결과가 실제와 다르게 나올 수 있습니다.',
+                        '이 검사는 간단하게 아이의 두상을 확인해 보는 실험으로써 점 위치 선정의 정확성에 따라 검사 결과가 실제와 다르게 나올 수 있습니다.\n',
                         style: TextStyle(
                             fontSize: min(screenWidth * (1 / 30),
                                 screenHeight * (1 / 30)),
                             color: Colors.black),
                       ),
                       WordBreakText(
-                        'CT 스캔, X-ray 스캔과 같이 더 정확하고 정밀한 검사를 위해서는 병원을 직접 방문해 주기 바랍니다',
+                        '더 정밀한 검사를 위해서는 병원을 직접 방문해 주기 바랍니다',
                         style: TextStyle(
                             fontSize: min(screenWidth * (1 / 30),
                                 screenHeight * (1 / 30)),

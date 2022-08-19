@@ -291,7 +291,7 @@ class _TestResultViewState extends State<TestResultView> {
                                 result_level: '3단계: 행동단계',
                                 result_detail:
                                     '이 수치에 해당 된다면 이마 비대칭도 육안적으로 보이고 심하면 양 귀 위치의 관계에도 차이가 있습니다.\n이는 어릴 때 바르게 잡아주지 않으면 심한 비대칭이 발생하고 더 큰 건강 문제도 초래 할 수 있으므로 예방 및 치료가 필요합니다.\n빠른 시일 내에 사두증 전문 병원을 방문 하여 검사를 받아 보세요!',
-                                result_cure: '치료: 교정모 치료 고려, 위치 변경 배개 필수',
+                                result_cure: '치료: 교정모 치료 고려, 위치 변경 베개 필수',
                                 route: 'level3View',
                               );
                             } else if (widget.cvaivalue > 12.0) {
