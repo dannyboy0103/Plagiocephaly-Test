@@ -62,7 +62,7 @@ class _CustomWarningBoxState extends State<CustomWarningBox> {
                       fontWeight: FontWeight.w600),
                 ),
                 Container(
-                  // height: MediaQuery.of(context).size.height * 2 / 3,
+                  // 참고 사항 및 유의 사항 Text들
                   padding: EdgeInsets.all(5),
                   alignment: Alignment.centerLeft,
                   child: Column(
@@ -121,6 +121,7 @@ class _CustomWarningBoxState extends State<CustomWarningBox> {
                   ),
                 ),
                 Padding(
+                  // 파란색 "확인했습니다" 버튼
                   padding: const EdgeInsets.all(3.0),
                   child: Align(
                     alignment: Alignment.center,

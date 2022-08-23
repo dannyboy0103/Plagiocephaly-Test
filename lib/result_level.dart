@@ -46,6 +46,7 @@ class _ResultLevelBoxState extends State<ResultLevelBox> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton(
+                  // 창 닫기 "X" 버튼
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
@@ -63,6 +64,7 @@ class _ResultLevelBoxState extends State<ResultLevelBox> {
               child: Image(
                 height: screenHeight * (5 / 6),
                 image: AssetImage(
+                  // 사두증 단계별 치료 사진
                   'assets/result_img.png',
                 ),
               ),
@@ -73,6 +75,7 @@ class _ResultLevelBoxState extends State<ResultLevelBox> {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: min10, vertical: min30),
               child: NeumorphicButton(
+                // 파란색 "질문하기" 버튼
                 style: NeumorphicStyle(
                   color: Colors.blueAccent,
                   depth: 3,
@@ -98,54 +101,11 @@ class _ResultLevelBoxState extends State<ResultLevelBox> {
         ],
       ),
     );
-    // return Scaffold(
-    //     extendBodyBehindAppBar: true,
-    //     appBar: AppBar(
-    //       backgroundColor: Colors.white.withOpacity(0),
-    //       actions: [
-    //         FlatButton(
-    //           onPressed: () {
-    //             Navigator.of(context).pop();
-    //           },
-    //           child: Icon(
-    //             Icons.close,
-    //             color: Colors.black,
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //     body: Column(
-    //       children: [
-    //         Image(
-    //           image: AssetImage('assets/resultLevel.jpeg'),
-    //           height: screenHeight * (2 / 3),
-    //         ),
-    //         NeumorphicButton(
-    //           style: NeumorphicStyle(
-    //             color: Colors.blueAccent,
-    //             depth: 3,
-    //             shadowDarkColor: Colors.grey,
-    //             shape: NeumorphicShape.convex,
-    //             boxShape: NeumorphicBoxShape.roundRect(
-    //               BorderRadius.circular(10),
-    //             ),
-    //           ),
-    //           onPressed: _launchURL,
-    //           child: Text(
-    //             widget.text,
-    //             style: TextStyle(
-    //               fontSize: min20,
-    //               color: Colors.white,
-    //               fontWeight: FontWeight.bold,
-    //             ),
-    //           ),
-    //         ),
-    //       ],
-    //     ));
   }
 }
 
 _launchURL() async {
+  // 카페로 연결해주는 링크
   const url = 'https://cafe.naver.com/drchangvely/14';
   if (await canLaunch(url)) {
     await launch(url);

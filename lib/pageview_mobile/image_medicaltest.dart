@@ -67,6 +67,7 @@ class _AnnotationViewState extends State<AnnotationView> {
           context: context,
           builder: (BuildContext context) {
             return CustomWarningBox(
+              // 링크로 처음 접속하면 검사와 관련된 간단한 정보들을 팝업창으로 알려줌
               title: "참고 사항",
               descriptions:
                   "Hii all this is a custom dialog in flutter and  you will be use in your flutter applications",
@@ -127,31 +128,9 @@ class _AnnotationViewState extends State<AnnotationView> {
             appBar: AppBar(
               elevation: 0,
               backgroundColor: Colors.black,
-              /*title: (cvaidone==false && crdone==false) ? Text(
-          '1단계',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ): (crdone==true)?Text(
-          '2단계',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ):Text(''),*/
-              // leading: FlatButton(
-              //   child: Icon(
-              //     Icons.home_outlined,
-              //     color: Colors.white,
-              //   ),
-              //   onPressed: () {
-              //     //Navigator.pop(context);
-              //     Navigator.pushReplacementNamed(context, 'initialView');
-              //   },
-              // ),
               actions: [
                 FlatButton(
+                    // 튜토리얼 영상 관련 팝업로 연결해주는 버튼
                     onPressed: () {
                       showDialog(
                           context: context,
@@ -164,23 +143,13 @@ class _AnnotationViewState extends State<AnnotationView> {
                             );
                           });
                     },
-                    // child: Padding(
-                    //   padding: const EdgeInsets.all(2.0),
-                    //   child: Column(
-                    //     children: [
-                    //       Icon(Icons.info, color: Colors.white),
-                    //       AutoSizeText('진단 방법',
-                    //           style:
-                    //               TextStyle(color: Colors.white, fontSize: 10)),
-                    //     ],
-                    //   ),
-                    // ),
                     child: Icon(
                       Icons.info,
                       color: Colors.white,
                     )),
                 (pickedImage != null)
                     ? FlatButton(
+                        // 새로운 사진으로 바꾸고 싶을 때, 새로운 사진을 추가하는 버튼
                         child: Container(
                             padding: EdgeInsets.fromLTRB(4, 4, 5, 4),
                             child: Icon(Icons.add_a_photo_outlined,
@@ -227,6 +196,7 @@ class _AnnotationViewState extends State<AnnotationView> {
                                           child: Transform.rotate(
                                             angle: angle,
                                             child: Image.memory(
+                                              // 업로드한 사진
                                               pickedImage,
                                               fit: (imagesizer.imgheight * 2 >
                                                       imagesizer.imgwidth *
@@ -238,7 +208,6 @@ class _AnnotationViewState extends State<AnnotationView> {
                                           ),
                                         )),
                                     GestureDetector(
-                                      // onTapDown: (details) {
                                       onTapUp: (details) {
                                         print(details.localPosition);
                                         setState(() {
@@ -309,17 +278,7 @@ class _AnnotationViewState extends State<AnnotationView> {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
-                                  //mainAxisSize: MainAxisSize.max,
                                   children: [
-                                    // AutoSizeText('검사를 위해 아이 머리 사진을 추가해주세요.',
-                                    //     textAlign: TextAlign.center,
-                                    //     style: TextStyle(
-                                    //         fontSize: min(
-                                    //             screenWidth * (1 / 30),
-                                    //             screenHeight * (1 / 30)),
-                                    //         // color: Colors.blueGrey,
-                                    //         color: Colors.black,
-                                    //         fontWeight: FontWeight.bold)),
                                     NeumorphicButton(
                                       margin: const EdgeInsets.all(20.0),
                                       padding: const EdgeInsets.all(50),
@@ -350,6 +309,7 @@ class _AnnotationViewState extends State<AnnotationView> {
                                               screenHeight * (1 / 10))),
                                     ),
                                     Neumorphic(
+                                      // 사진 업로드 관련 instruction
                                       style: NeumorphicStyle(
                                         color:
                                             Colors.blueAccent.withOpacity(0.5),
@@ -377,27 +337,8 @@ class _AnnotationViewState extends State<AnnotationView> {
                                 ),
                               ),
                         (pickedImage != null)
-                            // ? Container(
-                            //     color: Colors.blueAccent.withOpacity(0.5),
-                            //     child: Padding(
-                            //       padding: EdgeInsets.symmetric(
-                            //         vertical: min20,
-                            //         horizontal: min20,
-                            //         // horizontal: 13,
-                            //       ),
-                            //       child: Text(
-                            //           (crdone == false)
-                            //               ? '화면 상 아이의 양쪽 귀, 앞통수, 뒤통수에 점 \n(총 4개의 점)을 찍습니다'
-                            //               : 'X자와 머리의 끝부분이 교차하는 지점들에 각각 점 \n(총 4개의 점)을 찍습니다.',
-                            //           textAlign: TextAlign.center,
-                            //           style: TextStyle(
-                            //               fontSize: min30,
-                            //               // color: Colors.blueGrey,
-                            //               color: Colors.black,
-                            //               fontWeight: FontWeight.bold)),
-                            //     ),
-                            //   )
                             ? Neumorphic(
+                                // 사진 위에 점 찍는 방법 관련 instruction
                                 style: NeumorphicStyle(
                                   color: Colors.blueAccent.withOpacity(0.5),
                                   depth: 3,
@@ -413,7 +354,6 @@ class _AnnotationViewState extends State<AnnotationView> {
                                   ),
                                   child: Text(
                                       (crdone == false)
-                                          // ? '화면 상 아이의 양쪽 귀의 뒷부분, 앞통수, 코와 직선거리의 뒤통수에 점 \n(총 4개의 점)을 찍습니다'
                                           ? '화면 상 아이의 양쪽 귀, 앞통수, 뒤통수에 점\n(총 4개의 점)을 찍습니다'
                                           : 'X자와 머리의 끝부분이 교차하는 지점들에 각각 점 \n(총 4개의 점)을 찍습니다.',
                                       textAlign: TextAlign.center,
@@ -426,12 +366,13 @@ class _AnnotationViewState extends State<AnnotationView> {
                               )
                             : Container(),
                         Expanded(
+                          // 화면 맨 밑부분에 버튼들 (점 취소, 돌리기, 다음)
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Padding(
-                                // 점 취소 버튼
+                                // "점 취소" 버튼
                                 padding: const EdgeInsets.all(2),
                                 child: NeumorphicButton(
                                   style: NeumorphicStyle(
@@ -505,6 +446,7 @@ class _AnnotationViewState extends State<AnnotationView> {
                                 ),
                               ),
                               Padding(
+                                  // "돌리기" 버튼
                                   padding: const EdgeInsets.all(5),
                                   child: NeumorphicButton(
                                     style: NeumorphicStyle(
@@ -554,6 +496,7 @@ class _AnnotationViewState extends State<AnnotationView> {
                                     },
                                   )),
                               Padding(
+                                // "다음" 버튼
                                 padding: const EdgeInsets.all(5),
                                 child: NeumorphicButton(
                                   style: NeumorphicStyle(
@@ -611,6 +554,7 @@ class _AnnotationViewState extends State<AnnotationView> {
                                         gravity: Toast.BOTTOM,
                                       );
                                     } else {
+                                      // 점들이 눌린 상황에 따라 다르게 작용 (다음 page로 연결하거나 점이 부족하여 다시 점을 찍게 하거나)
                                       setState(() {
                                         if (crdone == true &&
                                             cvaidone == false) {
@@ -707,6 +651,7 @@ class ImagePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    // 사진이나 사진 위의 effect들 관련된 사항들
     // TODO: implement paint
     double eWidth = size.width / 25;
     double eHeight = size.height / 25;
@@ -822,8 +767,6 @@ class ImagePainter extends CustomPainter {
       TestValues.crvalue = (croffsets[maxi] - croffsets[mini]).distance /
           (croffsets[maxyi] - croffsets[minyi]).distance *
           100;
-
-      //print('This is CR: ${crvalue}');
 
       for (var cvaioffset in cvaioffsets) {
         canvas.drawPoints(ui.PointMode.points, [cvaioffset], paintpoints2);

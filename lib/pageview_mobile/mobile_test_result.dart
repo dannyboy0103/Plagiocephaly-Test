@@ -35,65 +35,38 @@ class _TestResultViewState extends State<TestResultView> {
   bool snapshot_present = false;
   QuerySnapshot current_user_doc_ref;
 
-  getloggedInState() async {
-    return Helperfunctions.getUserLoggedInSharedPreference().then((value) {
-      setState(() {
-        isloggedIn = value;
-        print('check isloggedin');
-      });
-    });
-  }
-
-  getuserEmail() async {
-    return Helperfunctions.getUserEmailSharedPreference().then((value) {
-      setState(() {
-        useremail = value;
-      });
-    });
-  }
-
-  getuserName() async {
-    return Helperfunctions.getUserNameSharedPreference().then((value) {
-      setState(() {
-        username = value;
-      });
-    });
-  }
-
-  getDocumentRef(String email) async {
-    print("inside getDocumentRef function");
-    return await crudmethods.getValuesByEmail(email); // 이게 뭐지?
-  }
-
-  @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   getuserName();
-  //   getuserEmail();
-  //   print('got logged in state - start');
-  //   getloggedInState();
-  //   print('got logged in state - end');
-  //   getDocumentRef(useremail).then((result) {
-  //     current_user_doc_ref = result;
-  //     print(current_user_doc_ref);
-  //     print(result);
-  //     //print("this is flag ${current_user_doc_ref}");
-  //     if (current_user_doc_ref != null) {
-  //       print(current_user_doc_ref);
-  //       print(result);
-  //       //print(current_user_doc_ref.docs[0].id);
-  //       if (current_user_doc_ref.docs[0].get('uploaded') == true) {
-  //         print(current_user_doc_ref.docs[0].get('uploaded'));
-  //         print('check snapshot_present');
-  //         snapshot_present = true;
-  //         print(snapshot_present);
-  //       }
-  //     }
+  // 앱 기능 변화에 따라 안쓰게 됐음
+  // getloggedInState() async {
+  //   return Helperfunctions.getUserLoggedInSharedPreference().then((value) {
+  //     setState(() {
+  //       isloggedIn = value;
+  //       print('check isloggedin');
+  //     });
   //   });
-  //   //Helperfunctions.getUserLoggedInSharedPreference().then((value) => print(value));
-  //   super.initState();
+  // }
+  //
+  // getuserEmail() async {
+  //   return Helperfunctions.getUserEmailSharedPreference().then((value) {
+  //     setState(() {
+  //       useremail = value;
+  //     });
+  //   });
+  // }
+  //
+  // getuserName() async {
+  //   return Helperfunctions.getUserNameSharedPreference().then((value) {
+  //     setState(() {
+  //       username = value;
+  //     });
+  //   });
+  // }
+  //
+  // getDocumentRef(String email) async {
+  //   print("inside getDocumentRef function");
+  //   return await crudmethods.getValuesByEmail(email); // 이게 뭐지?
   // }
 
+  @override
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
@@ -106,135 +79,13 @@ class _TestResultViewState extends State<TestResultView> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50),
         child: AppBar(
-            elevation: 0,
-            backgroundColor: Colors.black.withOpacity(0.8),
-            title: Text(
-              '결과',
-              style:
-                  TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-            ),
-            // leading: FlatButton(
-            //   child: Icon(
-            //     Icons.home_outlined,
-            //     color: Colors.white,
-            //   ),
-            //   onPressed: () {
-            //     Navigator.pushReplacementNamed(context, 'initialView');
-            //   },
-            // ),
-            actions: (isloggedIn)
-                ? [
-                    // FlatButton(
-                    //     onPressed: () {
-                    //       Navigator.pushReplacement(
-                    //           context,
-                    //           MaterialPageRoute(
-                    //               builder: (context) => MyPage(
-                    //                     myname: username,
-                    //                     myemail: useremail,
-                    //                   )));
-                    //     },
-                    //     child: Padding(
-                    //       padding: const EdgeInsets.all(8.0),
-                    //       child: Column(
-                    //         children: [
-                    //           Icon(Icons.my_library_books, color: Colors.white),
-                    //           AutoSizeText('마이페이지',
-                    //               style: TextStyle(
-                    //                   color: Colors.white, fontSize: 10)),
-                    //         ],
-                    //       ),
-                    //     )),
-                    // FlatButton(
-                    //   onPressed: () async {
-                    //     setState(() {
-                    //       isloading = true;
-                    //     });
-                    //     Toast.show(
-                    //       '업로드 중',
-                    //       context,
-                    //       duration: 2,
-                    //       gravity: Toast.BOTTOM,
-                    //     );
-                    //     Reference rootreference = FirebaseStorage.instance
-                    //         .ref()
-                    //         .child('headImages')
-                    //         .child("${useremail}.jpg");
-                    //     UploadTask uploadTask =
-                    //         rootreference.putData(widget.myimage);
-                    //     TaskSnapshot snapshot =
-                    //         await uploadTask.whenComplete(() => null);
-                    //     var downloadurl = await snapshot.ref.getDownloadURL();
-                    //
-                    //     Map<String, dynamic> data = {
-                    //       "useremail": useremail,
-                    //       "cr": widget.crvalue,
-                    //       "cvai": widget.cvaivalue,
-                    //       "myURL": downloadurl,
-                    //       "uploaded": true,
-                    //     };
-                    //     if (snapshot_present && current_user_doc_ref != null) {
-                    //       print('check snapshot_present 2');
-                    //       crudmethods.update_Values(
-                    //           current_user_doc_ref.docs[0].id, data);
-                    //
-                    //       //print(current_user_doc_ref.docs[0].id);
-                    //     } else {
-                    //       crudmethods.upload_Values(data);
-                    //     }
-                    //     Toast.show(
-                    //       '업로드 완료',
-                    //       context,
-                    //       duration: 2,
-                    //       gravity: Toast.BOTTOM,
-                    //     );
-                    //     setState(() {
-                    //       isloading = false;
-                    //     });
-                    //   },
-                    //   child: Row(
-                    //     children: [
-                    //       Padding(
-                    //         padding: const EdgeInsets.all(5.0),
-                    //         child: Column(
-                    //           children: [
-                    //             Icon(
-                    //               Icons.upload_file,
-                    //               color: Colors.white,
-                    //             ),
-                    //             AutoSizeText(
-                    //               'MyPage 저장',
-                    //               style: TextStyle(
-                    //                   color: Colors.white, fontSize: 10),
-                    //             ),
-                    //           ],
-                    //         ),
-                    //       )
-                    //     ],
-                    //   ),
-                    // )
-                  ]
-                : [
-                    // FlatButton(
-                    //   onPressed: () {
-                    //     Navigator.pushReplacementNamed(context, 'registerView');
-                    //   },
-                    //   child: Padding(
-                    //     padding: const EdgeInsets.all(8.0),
-                    //     child: Column(
-                    //       children: [
-                    //         Icon(
-                    //           Icons.person_add,
-                    //           color: Colors.white,
-                    //         ),
-                    //         AutoSizeText('회원가입',
-                    //             style:
-                    //                 TextStyle(fontSize: 10, color: Colors.white))
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
-                  ]),
+          elevation: 0,
+          backgroundColor: Colors.black.withOpacity(0.8),
+          title: Text(
+            '결과',
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+          ),
+        ),
       ),
       body: (isloading)
           ? Center(child: CircularProgressIndicator())
@@ -256,14 +107,8 @@ class _TestResultViewState extends State<TestResultView> {
                   ),
                   Container(
                     child: Column(
+                      // 검사 결과에 따라 4단계로 분류
                       children: [
-                        // Padding(
-                        //   padding: EdgeInsets.all(20),
-                        //   child: AutoSizeText(
-                        //     '마이페이지에 저장 후 마이페이지로 가시면 수치를 확인하실 수 있습니다.',
-                        //     style: TextStyle(fontWeight: FontWeight.bold),
-                        //   ),
-                        // ),
                         Builder(
                           builder: (context) {
                             if (widget.cvaivalue < 5.0 && widget.crvalue < 90) {
@@ -356,6 +201,7 @@ class ResultCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   TextButton(
+                    // 좌우 간격 맞추기 위해 보이지도 않고 기능도 없는 버튼 끼워둠
                     onPressed: () {},
                     child: Icon(
                       Icons.emoji_objects,
@@ -364,6 +210,7 @@ class ResultCard extends StatelessWidget {
                     ),
                   ),
                   Text(
+                    // 검사 결과에 따른 단계 이름
                     result_level,
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -373,6 +220,7 @@ class ResultCard extends StatelessWidget {
                     ),
                   ),
                   TextButton(
+                      // "사두증 단계별 치료 팝업창"으로 연결
                       onPressed: () {
                         showDialog(
                             context: context,
@@ -392,18 +240,6 @@ class ResultCard extends StatelessWidget {
                 ],
               ),
             )),
-        // Container(
-        //   padding: EdgeInsets.all(30),
-        //   alignment: Alignment.center,
-        //   child: AutoSizeText(
-        //     result_level,
-        //     minFontSize: 20,
-        //     style: TextStyle(
-        //       color: Colors.black,
-        //       fontWeight: FontWeight.bold,
-        //     ),
-        //   ),
-        // ),
         Container(
           // padding: EdgeInsets.all(30),
           padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
@@ -420,7 +256,6 @@ class ResultCard extends StatelessWidget {
         ),
         Container(
           padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-          // alignment: Alignment.center,
           child: Text(
             result_detail,
             // textAlign: TextAlign.center,
@@ -431,60 +266,6 @@ class ResultCard extends StatelessWidget {
             ),
           ),
         ),
-        // Container(
-        //   // color: Colors.black,
-        //   height: MediaQuery.of(context).size.height / 6,
-        //   padding: EdgeInsets.all(30),
-        //   alignment: Alignment.center,
-        //   child: Container(
-        //       // color: Colors.black,
-        //       child: NeumorphicButton(
-        //     style: NeumorphicStyle(
-        //       color: Colors.black,
-        //       depth: 3,
-        //       shape: NeumorphicShape.convex,
-        //       boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(8)),
-        //     ),
-        //     padding: EdgeInsets.all(
-        //       min(screenWidth * (1 / 30), screenHeight * (1 / 30)),
-        //     ),
-        //     child: Row(
-        //       crossAxisAlignment: CrossAxisAlignment.center,
-        //       mainAxisAlignment: MainAxisAlignment.center,
-        //       children: [
-        //         Icon(
-        //           Icons.search,
-        //           color: Colors.white,
-        //         ),
-        //         SizedBox(
-        //           width: 2,
-        //         ),
-        //         Text('치료병원 알아보기',
-        //             style: TextStyle(
-        //               fontSize: min20,
-        //               color: Colors.white,
-        //             ))
-        //       ],
-        //     ),
-        //   )
-        //       // child: RaisedButton.icon(
-        //       //     color: Colors.black,
-        //       //     onPressed: () {
-        //       //       Navigator.pushNamed(context, 'hospitalView');
-        //       //     },
-        //       //     icon: Icon(
-        //       //       Icons.search,
-        //       //       color: Colors.white,
-        //       //     ),
-        //       //     label: AutoSizeText(
-        //       //       '치료병원 알아보기',
-        //       //       style: TextStyle(
-        //       //         fontSize: min20,
-        //       //         color: Colors.white,
-        //       //       ),
-        //       //     )),
-        //       ),
-        // ),
       ]),
     );
   }
